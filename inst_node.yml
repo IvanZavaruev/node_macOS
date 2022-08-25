@@ -1,0 +1,22 @@
+- name: node exporter 
+  hosts: mac_OS
+  connection: local
+
+  tasks:
+  - name: inst_node
+    community.general.homebrew:
+      name: node_exporter
+      state: present
+  
+  - name: copy node_exporter plist file
+    become: yes
+    copy:
+      remote_src: yes
+      src: /opt/homebrew/Cellar/node_exporter/1.3.1/homebrew.mxcl.node_exporter.plist
+      dest: /Library/LaunchDaemons/
+      
+  - name: start node exporter
+    community.general.launchd:
+      name: homebrew.mxcl.node_exporter
+      state: started
+      enabled: yes

@@ -1,0 +1,7 @@
+- name: Ping task 
+  hosts: all
+  connection: local
+
+  tasks:
+  - name: Task ping
+    ping:
